@@ -50,7 +50,8 @@
             border-radius: var(--border-radius);
             padding: 24px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            /* --- UPDATE 3: Subtle Hover Effect (Scale) --- */
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease-in-out;
             min-height: 100px;
             display: flex;
             flex-direction: column;
@@ -58,8 +59,9 @@
         }
 
         .bento-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            /* Scale up slightly (1.005) for a professional zoom effect */
+            transform: scale(1.005); 
+            box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.1), 0 6px 6px -6px rgba(0, 0, 0, 0.1);
         }
 
         .card-header {
@@ -96,13 +98,14 @@
             font-weight: 600;
             margin-right: 15px;
             font-size: 0.9rem;
+            transition: color 0.1s;
+        }
+
+        .social-links a:hover {
+            color: #007bff; /* Slightly lighter blue on hover for feedback */
         }
         
         /* Specific Styles for Card Content */
-        #card-1-profile {
-            justify-content: flex-start;
-        }
-
         #card-2-location .time-display {
             font-size: 2.5rem;
             font-weight: 700;
@@ -116,7 +119,6 @@
         }
 
         #card-3-tech-stack .subject-tag {
-            /* Using the deep blue accent color */
             background-color: var(--color-accent);
             color: var(--color-card);
             padding: 4px 10px;
@@ -124,58 +126,90 @@
             font-size: 0.85rem;
             font-weight: 500;
         }
-
-        #card-6-playlist {
-            justify-content: center;
-            align-items: center;
-        }
         
         /* ------------------------------------ */
         /* Desktop Grid Layout (Media Query) */
         /* ------------------------------------ */
         @media (min-width: 768px) {
             .bento-grid-container {
-                /* 12-column grid for flexibility */
+                /* 12-column grid remains the base */
                 grid-template-columns: repeat(12, 1fr);
             }
             
-            /* Card Sizing using grid-column / grid-row */
+            /* The layout has been re-optimized for 7 cards: */
             
-            /* Card 1 (Profile): Large box (span 8 cols, 3 rows) */
-            #card-1-profile {
-                grid-column: span 8;
-                grid-row: span 3;
-            }
+          #card-1-profile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    border-radius: var(--border-radius);
+
+    /* --- KEY LINE: Using the relative path to your file --- */
+    background-image: url('bg.jpg'); 
+    
+    /* Ensure the image covers the entire card area */
+    background-size: cover;
+    
+    /* Center the image */
+    background-position: center;
+    
+    background-repeat: no-repeat;
+    
+    /* Dimming Overlay: darkens the image and helps text readability */
+    background-color: rgba(0, 0, 0, 0.4); 
+    background-blend-mode: darken; /* Blends the color over the image */
+}
+}
+
             
-            /* Card 2 (Location): Small box (span 4 cols, 1 row) */
+            /* Card 2 (Location): Small box (span 4 cols, 1 row) - REMAINS */
             #card-2-location {
                 grid-column: span 4;
                 grid-row: span 1;
             }
             
-            /* Card 3 (Tech Stack): Medium box (span 4 cols, 2 rows) */
+            /* Card 3 (Tech Stack): Medium box (span 4 cols, 2 rows) - REMAINS */
             #card-3-tech-stack {
                 grid-column: span 4;
                 grid-row: span 2;
             }
             
-            /* Card 4 (Case Study): Medium box (span 4 cols, 2 rows) */
+            /* Card 4 (Case Study): Medium box (span 4 cols, 2 rows) - REMAINS */
             #card-4-case-study {
                 grid-column: span 4;
                 grid-row: span 2;
             }
 
-            /* Card 5 (Hobby): Small box (span 4 cols, 1 row) */
+            /* Card 5 (Hobby): Small box (span 4 cols, 1 row) 
+               This card now sits on row 4 to align with the new Reflection card. */
             #card-5-hobby {
                 grid-column: span 4;
+                grid-row: span 1; 
+            }
+            
+            /* --- UPDATE 2: New Card (Reflection) ---
+               Sits next to Hobby (span 8 cols, 1 row) to fill the remaining width. */
+            #card-7-reflection {
+                grid-column: span 8;
                 grid-row: span 1;
+                order: 6; /* Ensures it sits next to Hobby despite source order */
             }
 
             /* Card 6 (Playlist): Wide box at the bottom (span 12 cols, 1 row) */
             #card-6-playlist {
                 grid-column: span 12;
                 grid-row: span 1;
+                order: 7; /* Ensures it is always the last item */
             }
+        }
+        
+        /* Mobile adjustment for new card (stacked) */
+        #card-7-reflection {
+            order: 6; /* Maintain relative order even when stacked */
         }
     </style>
 </head>
@@ -192,9 +226,9 @@
                 <p style="color: var(--color-muted);">Year 1 Student, UMT</p>
             </div>
             <div class="social-links">
-                <a href="#">LinkedIn</a>
-                <a href="#">GitHub</a>
-                <a href="#">UMT Portal</a>
+                <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="#" target="_blank" rel="noopener noreferrer">UMT Portal</a>
             </div>
         </div>
 
@@ -232,9 +266,17 @@
             </div>
         </div>
         
+        <div class="bento-card" id="card-7-reflection">
+            <div class="card-header">Reflection</div>
+            <div class="main-content">
+                <p style="font-size: 1.1rem; font-weight: 600;">Why Food Tech Matters in Malaysia</p>
+                <p style="font-size: 0.95rem;">Sustainable food security is crucial for our future. By optimizing local processing methods, we can reduce waste and improve nutrition.</p>
+            </div>
+        </div>
+
         <div class="bento-card" id="card-6-playlist">
             <div class="card-header">Current Study Soundtrack</div>
-            <div class="main-content">
+            <div class="main-content"><iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/7JYtGQsBwwgpHjFCZ4y5Ey?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 <p style="font-size: 1.2rem; font-weight: 700;">Lo-fi Beats to Study and Analyze Data To</p>
             </div>
         </div>
@@ -253,9 +295,7 @@
                 timeElement.textContent = timeString;
             }
         }
-        // Update immediately on load
         updateTime(); 
-        // Update every 30 seconds
         setInterval(updateTime, 30000); 
     </script>
 </body>
