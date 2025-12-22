@@ -104,6 +104,27 @@
         .social-links a:hover {
             color: #007bff; /* Slightly lighter blue on hover for feedback */
         }
+
+        /* --- NEW BUTTON STYLE --- */
+        .btn-action {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 10px 20px;
+            background-color: var(--color-accent);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .btn-action:hover {
+            background-color: #003366; /* Darker shade on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+            box-shadow: 0 4px 12px rgba(0, 77, 153, 0.2);
+        }
         
         /* Specific Styles for Card Content */
         #card-2-location .time-display {
@@ -138,34 +159,56 @@
             
             /* The layout has been re-optimized for 7 cards: */
             
-          #card-1-profile::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    border-radius: var(--border-radius);
-
-    /* --- KEY LINE: Using the relative path to your file --- */
-    background-image: url('bg.jpg'); 
-    
-    /* Ensure the image covers the entire card area */
-    background-size: cover;
-    
-    /* Center the image */
-    background-position: center;
-    
-    background-repeat: no-repeat;
-    
-    /* Dimming Overlay: darkens the image and helps text readability */
-    background-color: rgba(0, 0, 0, 0.4); 
-    background-blend-mode: darken; /* Blends the color over the image */
-}
-}
-
+            #card-1-profile {
+                grid-column: span 8;
+                grid-row: span 2;
+                position: relative; 
+                overflow: hidden;
+                color: #ffffff; /* Make text white to stand out against BG image */
+            }
             
+            #card-1-profile::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+                border-radius: var(--border-radius);
+
+                /* --- KEY LINE: Using the relative path to your file --- */
+                background-image: url('bg.jpg'); 
+                
+                /* Ensure the image covers the entire card area */
+                background-size: cover;
+                
+                /* Center the image */
+                background-position: center;
+                
+                background-repeat: no-repeat;
+                
+                /* Dimming Overlay: darkens the image and helps text readability */
+                background-color: rgba(0, 0, 0, 0.4); 
+                background-blend-mode: darken; /* Blends the color over the image */
+            }
+
+            /* Ensure content sits above the background image */
+            #card-1-profile .main-content, 
+            #card-1-profile .card-header, 
+            #card-1-profile .social-links {
+                position: relative;
+                z-index: 1;
+            }
+
+            #card-1-profile .tagline {
+                color: #e0f2fe; /* Light blue/white for tagline on dark bg */
+            }
+            
+            #card-1-profile .social-links a {
+                 color: #ffffff; /* White links on dark bg */
+            }
+
             /* Card 2 (Location): Small box (span 4 cols, 1 row) - REMAINS */
             #card-2-location {
                 grid-column: span 4;
@@ -223,7 +266,7 @@
                 <h1>IZZ NABIL ZARIF</h1>
                 <p class="tagline">'Innovating good quality food chain.'</p>
                 <p>BSc. (Hons) Plant Science</p>
-                <p style="color: var(--color-muted);">Year 1 Student, UMT</p>
+                <p style="color: var(--color-muted); color: rgba(255,255,255,0.8) !important;">Year 1 Student, UMT</p>
             </div>
             <div class="social-links">
                 <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -255,6 +298,7 @@
             <div class="main-content">
                 <h2>Starch Gelatinization in Local Kuih</h2>
                 <p style="font-size: 0.95rem;">Analyzing texture profiles and structural integrity of traditional Kuih Lapis under various cooking parameters.</p>
+                <a href="https://izznbilzarif.github.io/focus-timer-app/app.html" target="_blank" class="btn-action">Try My Focus Timer App</a>
             </div>
         </div>
 
